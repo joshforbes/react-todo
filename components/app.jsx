@@ -11,9 +11,6 @@ var App = React.createClass({
     this.setState({ todos: this.state.todos.concat([todo]) });
   },
   removeTodo: function(todo) {
-    this.state.todos.map(function(item, index) {
-      console.log(index);
-    });
     var filteredTodos = this.state.todos.filter(item => item !== todo);
     this.setState({ todos: filteredTodos});
   },
@@ -29,8 +26,8 @@ var App = React.createClass({
 });
 
 var TodoList = React.createClass({
-  renderTodo: function(value) {
-    return <Todo removeTodo={this.props.removeTodo} key={Math.random()} todo={value} />
+  renderTodo: function(value, index) {
+    return <Todo removeTodo={this.props.removeTodo} key={index} todo={value} />
   },
   render: function() {
     var todos = this.props.todos.map(this.renderTodo);
