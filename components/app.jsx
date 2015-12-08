@@ -10,15 +10,15 @@ var App = React.createClass({
   addTodo(todo) {
     this.setState({ todos: this.state.todos.concat([todo]) });
   },
-  removeTodo(todo) {
-    var filteredTodos = this.state.todos.filter(item => item !== todo);
-    this.setState({ todos: filteredTodos});
+  removeTodo(index) {
+    this.state.todos.splice(index, 1);
+    this.setState({ todos: this.state.todos});
   },
   render() {
     return (
       <div>
         <h1>Todo List</h1>
-        <TodoList removeTodo={this.removeTodo} todos={this.state.todos}/>
+        <TodoList removeTodo={this.removeTodo} todos={this.state.todos} />
         <TodoForm addTodo={this.addTodo} />
       </div>
     )
@@ -27,7 +27,9 @@ var App = React.createClass({
 
 var TodoList = React.createClass({
   renderTodo(value, index) {
-    return <Todo removeTodo={this.props.removeTodo} key={index} todo={value} />
+    return (
+      <Todo removeTodo={this.props.removeTodo} key={index} todo={value} index={index} />
+    )
   },
   render() {
     var todos = this.props.todos.map(this.renderTodo);
@@ -42,11 +44,13 @@ var TodoList = React.createClass({
 var Todo = React.createClass({
   deleteTodo(event) {
     event.preventDefault();
-    this.props.removeTodo(this.props.todo);
+    this.props.removeTodo(this.props.index);
   },
   render() {
     return (
-      <li><a onClick={this.deleteTodo}>{this.props.todo}</a></li>
+      <li>
+        <a onClick={this.deleteTodo}>{this.props.todo}</a>
+      </li>
     )
   }
 });
