@@ -2,19 +2,19 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var App = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
       todos: []
     }
   },
-  addTodo: function(todo) {
+  addTodo(todo) {
     this.setState({ todos: this.state.todos.concat([todo]) });
   },
-  removeTodo: function(todo) {
+  removeTodo(todo) {
     var filteredTodos = this.state.todos.filter(item => item !== todo);
     this.setState({ todos: filteredTodos});
   },
-  render: function() {
+  render() {
     return (
       <div>
         <h1>Todo List</h1>
@@ -26,10 +26,10 @@ var App = React.createClass({
 });
 
 var TodoList = React.createClass({
-  renderTodo: function(value, index) {
+  renderTodo(value, index) {
     return <Todo removeTodo={this.props.removeTodo} key={index} todo={value} />
   },
-  render: function() {
+  render() {
     var todos = this.props.todos.map(this.renderTodo);
     return (
       <ul>
@@ -40,11 +40,11 @@ var TodoList = React.createClass({
 });
 
 var Todo = React.createClass({
-  deleteTodo: function(event) {
+  deleteTodo(event) {
     event.preventDefault();
     this.props.removeTodo(this.props.todo);
   },
-  render: function() {
+  render() {
     return (
       <li><a onClick={this.deleteTodo}>{this.props.todo}</a></li>
     )
@@ -52,13 +52,13 @@ var Todo = React.createClass({
 });
 
 var TodoForm = React.createClass({
-  createTodo: function(event) {
+  createTodo(event) {
     event.preventDefault();
     var todo = this.refs.todo.value;
     this.props.addTodo(todo);
     this.refs.todoForm.reset();
   },
-  render: function() {
+  render() {
     return (
     <form ref="todoForm" onSubmit={this.createTodo}>
       <h3>Add a Todo</h3>
